@@ -16,6 +16,7 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
       <SidebarItem
         icon="/calender.svg"
         label="Calendar"
+        href="/calender"
         collapsed={collapsed}
         active={activeItem === "Calendar"}
         onClick={() => setActiveItem("Calendar")}
@@ -24,6 +25,7 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
       <SidebarItem
         icon="/todo.svg"
         label="To-Do List"
+        href="/to-do"
         collapsed={collapsed}
         active={activeItem === "to-Do List"}
         onClick={() => setActiveItem("to-Do List")}
@@ -32,6 +34,7 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
       <SidebarItem
         icon="/book.svg"
         label="Subjects"
+        href="/subjects"
         collapsed={collapsed}
         active={activeItem === "Subjects"}
         onClick={() => setActiveItem("Subjects")}
@@ -40,6 +43,7 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
       <SidebarItem
         icon="/tests.svg"
         label="Tests"
+        href="/tests"
         collapsed={collapsed}
         active={activeItem === "Tests"}
         onClick={() => setActiveItem("Tests")}

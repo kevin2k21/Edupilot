@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 
-import { Header } from "./Header";
+import { Header } from "../header/Header";
 import { Sidebar } from "@/components/sidebar/Sidebar";
 import { HeaderSearch } from "@/components/header/HeaderSearch";
 import { InfoCard } from "@/components";
@@ -42,9 +42,14 @@ export function AppLayout({ children }: AppLayoutProps) {
       {/* BODY */}
       <div className="flex flex-1">
         <Sidebar collapsed={!sidebarOpen} />
-        <main className="flex-1 px-4 py-2">{children}</main>
+        <main className="flex-1 px-4 py-2">
+          {children}
+          <div className="text-gray-400 text-center mt-20">
+            Select an item from the sidebar
+          </div>
+        </main>
       </div>
-
+      
     </div>
   );
 }

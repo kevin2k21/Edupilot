@@ -1,16 +1,19 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type SidebarItemProps = {
   icon: string;
-  label: string;
+  label: string;  
   collapsed: boolean;
+  href: string;
   active?: boolean;
   onClick?: () => void;
 };
 
-export function SidebarItem({ icon, label, collapsed, active = false, onClick }: SidebarItemProps) {
+export function SidebarItem({ icon, label, collapsed, href, active = false, onClick }: SidebarItemProps) {
   return (
-    <div
+    <Link
+    href={href}
         onClick={onClick}
       className={`
         flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer
@@ -29,6 +32,6 @@ export function SidebarItem({ icon, label, collapsed, active = false, onClick }:
           {label}
         </span>
       )}
-    </div>
+    </Link>
   );
 }
