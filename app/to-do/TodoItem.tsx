@@ -38,7 +38,7 @@ export function TodoItem({
     <input
       value={editText}
       onChange={(e) => onEditChange(e.target.value)}
-      className="flex-1 border px-3 py-1.5 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="flex-1 border px-3 py-1.5 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
     />
 
     <button
