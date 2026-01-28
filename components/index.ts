@@ -1,3 +1,3 @@
 export * from "./ui/InfoCard";
-export * from "./sidebar/Sidebar";
-export * from "./sidebar/SidebarItem";
+export * from "./layout/Sidebar";
+export * from "./ui/SidebarItem";

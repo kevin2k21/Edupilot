@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { SidebarItem } from "./SidebarItem";
+import { SidebarItem } from "../ui/SidebarItem";
 
 export function Sidebar({ collapsed }: { collapsed: boolean }) {
   const pathname = usePathname();
@@ -9,11 +9,8 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
   return (
      <aside
       className={`
--        bg-gray-200 py-4 transition-all duration-300
--        ${collapsed ? "w-20 px-2" : "w-60 px-3"}
-+        ${collapsed ? "w-16" : "w-60"}
-+        bg-gray-200 px-3 py-4
-+        transition-all duration-300
+        bg-gray-200 py-4 transition-all duration-300
+        ${collapsed ? "w-20 px-2" : "w-60 px-3"}
        `}
     >
       <SidebarItem
