@@ -8,11 +8,11 @@ export function TodoInput({ onAdd }: Props) {
   const [input, setInput] = useState("");
 
   return (
-    <div className="flex gap-2 mb-4 ">
+    <div className="flex gap-2 items-center w-full ">
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        className="flex-1 border px-2 py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+        className="flex-1 border px-4 py-2 rounded text-black"
         placeholder="New task"
       />
       <button
@@ -20,7 +20,7 @@ export function TodoInput({ onAdd }: Props) {
           onAdd(input);
           setInput("");
         }}
-        className="px-3 py-1 bg-blue-600 text-white rounded"
+        className="bg-blue-600 text-white px-4 py-2 rounded"
       >
         Add
       </button>

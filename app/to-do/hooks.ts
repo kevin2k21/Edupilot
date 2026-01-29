@@ -8,6 +8,7 @@ export function useTodos() {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editText, setEditText] = useState("");
   const [loaded, setLoaded] = useState(false);
+  const [filter, setFilter] = useState<"all" | "completed" | "pending">("all");
 
   useEffect(() => {
     setTasks(loadTasks());
@@ -57,6 +58,8 @@ export function useTodos() {
     tasks,
     editingId,
     editText,
+    filter,
+    setFilter,
     setEditText,
     addTask,
     toggleTask,
