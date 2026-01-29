@@ -1,8 +1,9 @@
+import { Calendar } from "./calendar";
+
 export default function CalendarPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-black">Calendar</h1>
-      <p className="text-black">Your calendar content goes here.</p>
+    <div className="p-6">
+      <Calendar />
     </div>
   );
 }
