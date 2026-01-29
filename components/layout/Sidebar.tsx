@@ -14,11 +14,11 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
        `}
     >
       <SidebarItem
-        icon="/calender.svg"
-        label="calender"
-        href="/calender"
+        icon="/calendar.svg"
+        label="calendar"
+        href="/calendar"
         collapsed={collapsed}
-        active={pathname === "/calender"}
+        active={pathname === "/calendar"}
       />
 
       <SidebarItem
@@ -26,7 +26,7 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
         label="To-Do List"
         href="/to-do"
         collapsed={collapsed}
-        active={pathname === "/to-do"}
+        active={pathname.startsWith("/to-do")}
       />
 
       <SidebarItem
@@ -34,7 +34,7 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
         label="Subjects"
         href="/subjects"
         collapsed={collapsed}
-        active={pathname === "/subjects"}
+        active={pathname.startsWith("/subjects")}
       />
 
       <SidebarItem
