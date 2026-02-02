@@ -28,7 +28,7 @@ export function TodoItem({
       {/* Checkbox */}
       <input
         type="checkbox"
-        checked={task.done}
+        checked={task.completed}
         onChange={onToggle}
         className="h-4 w-4 accent-blue-600"
       />
@@ -60,10 +60,10 @@ export function TodoItem({
           {/* Task text */}
           <span
             className={`flex-1 text-sm ${
-              task.done ? "line-through text-gray-400" : "text-gray-800"
+              task.completed ? "line-through text-gray-400" : "text-gray-800"
             }`}
           >
-            {task.text}
+            {task.title}
           </span>
 
           {/* Edit */}

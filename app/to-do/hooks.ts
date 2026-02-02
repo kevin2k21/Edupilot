@@ -11,33 +11,46 @@ export function useTodos() {
   const [filter, setFilter] = useState<"all" | "completed" | "pending">("all");
 
   useEffect(() => {
-    setTasks(loadTasks());
-    setLoaded(true);
-  }, []);
+    async function loadTasks() {
+      const res = await fetch('/api/tasks')
+      const data = await res.json()
+      setTasks(data)
+    }
+    loadTasks()
+  }, [])
 
-  useEffect(() => {
-    if (!loaded) return;
-    saveTasks(tasks);
-  }, [tasks, loaded]);
 
-  function addTask(task: string) {
-    if (!task.trim()) return;
-    setTasks([...tasks, { text: task ,id: Date.now(), done: false }]);
+  async function addTask(title: string) {
+  const res = await fetch('/api/tasks', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title }), // ✅ FIX
+  })
+
+  const newTask = await res.json()
+  setTasks(prev => [newTask, ...prev])
+}
+
+
+  async function toggleTask(id: number) {
+    const res = await fetch(`/api/tasks/${id}`, {
+      method: 'PATCH',
+    })
+    const updated = await res.json()
+
+    setTasks(prev =>
+      prev.map(t => (t.id === id ? updated : t))
+    )
   }
 
-  function toggleTask(id: number) {
-    setTasks(tasks.map(t =>
-      t.id === id ? { ...t, done: !t.done } : t
-    ));
-  }
-
-  function deleteTask(id: number) {
-    setTasks(tasks.filter(t => t.id !== id));
+  async function deleteTask(id: number) {
+    await fetch(`/api/tasks/${id}`, { method: 'DELETE' })
+    setTasks(prev => prev.filter(t => t.id !== id))
   }
 
   function startEdit(task: Task) {
     setEditingId(task.id);
-    setEditText(task.text);
+    setEditText(task.title);
   }
 
   function saveEdit(id: number) {

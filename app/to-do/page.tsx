@@ -7,8 +7,8 @@ export default function TodoPage() {
   const todo = useTodos();
 
   const filteredTasks = todo.tasks.filter(task => {
-    if (todo.filter === "completed") return task.done;
-    if (todo.filter === "pending") return !task.done;
+    if (todo.filter === "completed") return task.completed;
+    if (todo.filter === "pending") return !task.completed;
     return true;
   });
 
