@@ -12,6 +12,8 @@ model User {
   email     String   @unique
   name      String?
   createdAt DateTime @default(now())
+
+  tasks     Task[]   
 }
 
 model Task {
@@ -19,5 +21,9 @@ model Task {
   title     String
   completed Boolean  @default(false)
   createdAt DateTime @default(now())
+
+  userId    Int      
+  user      User     @relation(fields: [userId], references: [id])
 }
+
 

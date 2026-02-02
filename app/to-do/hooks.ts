@@ -1,63 +1,82 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import { Task } from "./types";
-import { loadTasks, saveTasks } from "./storage";
+import { Task } from "../types/types";
 
 export function useTodos() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editText, setEditText] = useState("");
-  const [loaded, setLoaded] = useState(false);
   const [filter, setFilter] = useState<"all" | "completed" | "pending">("all");
 
+  // 🔹 Fetch ONLY current user's tasks
   useEffect(() => {
-    async function loadTasks() {
-      const res = await fetch('/api/tasks')
-      const data = await res.json()
-      setTasks(data)
+    async function fetchTasks() {
+      const res = await fetch("/api/tasks");
+      if (!res.ok) return;
+      const data = await res.json();
+      setTasks(data);
     }
-    loadTasks()
-  }, [])
+    fetchTasks();
+  }, []);
 
-
+  // 🔹 Create task (auto-linked to current user on server)
   async function addTask(title: string) {
-  const res = await fetch('/api/tasks', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ title }), // ✅ FIX
-  })
+    const res = await fetch("/api/tasks", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title }),
+    });
 
-  const newTask = await res.json()
-  setTasks(prev => [newTask, ...prev])
-}
+    if (!res.ok) return;
 
+    const newTask = await res.json();
+    setTasks(prev => [newTask, ...prev]);
+  }
 
+  // 🔹 Toggle completion (ownership checked on server)
   async function toggleTask(id: number) {
     const res = await fetch(`/api/tasks/${id}`, {
-      method: 'PATCH',
-    })
-    const updated = await res.json()
+      method: "PATCH",
+    });
 
-    setTasks(prev =>
-      prev.map(t => (t.id === id ? updated : t))
-    )
+    if (!res.ok) return;
+
+    const updated = await res.json();
+    setTasks(prev => prev.map(t => (t.id === id ? updated : t)));
   }
 
+  // 🔹 Delete task (ownership checked on server)
   async function deleteTask(id: number) {
-    await fetch(`/api/tasks/${id}`, { method: 'DELETE' })
-    setTasks(prev => prev.filter(t => t.id !== id))
+    const res = await fetch(`/api/tasks/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) return;
+
+    setTasks(prev => prev.filter(t => t.id !== id));
   }
 
+  // 🔹 Edit helpers
   function startEdit(task: Task) {
     setEditingId(task.id);
     setEditText(task.title);
   }
 
-  function saveEdit(id: number) {
+  async function saveEdit(id: number) {
     if (!editText.trim()) return;
-    setTasks(tasks.map(t =>
-      t.id === id ? { ...t, text: editText } : t
-    ));
+
+    const res = await fetch(`/api/tasks/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title: editText }),
+    });
+
+    if (!res.ok) return;
+
+    const updated = await res.json();
+    setTasks(prev => prev.map(t => (t.id === id ? updated : t)));
+
     setEditingId(null);
     setEditText("");
   }
